@@ -1,8 +1,10 @@
 import { defineCollection, z } from 'astro:content';
 
-const values = ["typescript", "javascript", "react", "next", "astro", "node", "rust","python", "docker", "aws"] as const;
+const values = ["typescript", "javascript", "react", "next", "astro", "node", "rust","python", "docker", "aws", "html", "css"] as const;
 
-export const tags = z.enum(values);
+const tags = z.enum(values);
+
+export type Tags = z.infer<typeof tags>
 
 const blog = defineCollection({
 	// Type-check frontmatter using a schema
