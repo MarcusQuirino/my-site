@@ -1,0 +1,11 @@
+---
+interface Props {
+    name: string;
+}
+
+const { name } = Astro.props;
+---
+<div class="text-center h-screen flex flex-col gap-8">
+    <h1 class="text-6xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient md:text-9xl">{ name }</h1>
+    <p class="text-slate-100 text-2xl">Coming soon...</p>
+</div>

@@ -1,0 +1,12 @@
+---
+import ComingSoon from "../../components/ComingSoon.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title={`${SITE_TITLE} - Setup`}
+  description={SITE_DESCRIPTION}
+>
+    <ComingSoon name="setup"/>
+</BaseLayout>
