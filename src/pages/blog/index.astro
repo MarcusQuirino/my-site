@@ -1,32 +1,30 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
-import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
 
-const posts = (await getCollection("blog")).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+const posts = (await getCollection('blog')).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
 
-<BaseLayout
-	title={`${SITE_TITLE} - Blog`}
-	description={SITE_DESCRIPTION}
->
-	<main>
-		<section>
-			<ul>
-				{
-					posts.map(post => (
-						<li>
-							<FormattedDate date={post.data.pubDate} />
-							<a href={`/blog/${post.slug}/`}>
-								{post.data.title}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</section>
-	</main>
+<BaseLayout title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION}>
+  <div>
+    <ul class="space-y-4">
+      {
+        posts.map((post) => (
+          <li>
+            <BlogCard
+              href={`/blog/${post.slug}/`}
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              tags={post.data.tags}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </BaseLayout>

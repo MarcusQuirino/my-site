@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-const values = ["typescript", "javascript", "react", "next", "astro", "node", "rust","python", "docker", "aws", "html", "css"] as const;
+const values = ["typescript", "javascript", "react", "next", "astro", "node", "rust","python", "docker", "aws", "html", "css", "dev", "life", "misc"] as const;
 
 const tags = z.enum(values);
 
@@ -13,7 +13,9 @@ const blog = defineCollection({
 		title: z.string(),
 		description: z.string(),
 		highligth: z.boolean().default(false),
-		tags: z.array(tags).optional(),
+		tags: z.array(tags).nonempty({
+			message: "Can't be empty!: needs tags for blog post",
+		  }),
 		pubDate: z
 			.string()
 			.or(z.date())

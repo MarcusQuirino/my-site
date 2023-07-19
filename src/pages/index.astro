@@ -14,7 +14,7 @@ const currentJob = {
   title={`${SITE_TITLE} - Home`}
   description={SITE_DESCRIPTION}
 >
-  <main class='text-gray-400 p-4 space-y-4'>
+  <main class='text-gray-400 p-4 space-y-4 md:h-screen'>
     <h1
       class='text-2xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient'
     >
@@ -57,22 +57,20 @@ const currentJob = {
       </h2>
       <div class='flex flex-col gap-3 md:grid grid-cols-2'>
         <ProjectCard
-          title='p4p site'
+          href="/"
+          title='this site'
           tags={["astro", "typescript"]}
         >
           it's literally this exact site
         </ProjectCard>
         <ProjectCard
+          href="https://p4p-site.vercel.app"
           title='p4p site'
           tags={["html", "css"]}
         >
           site for my bf
         </ProjectCard>
       </div>
-    </section>
-    <section>
-      <h2 class='text-slate-100 text-xl font-semibold py-4'>My socials</h2>
-      
     </section>
   </main>
 </BaseLayout>

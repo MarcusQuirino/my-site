@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import type { HTMLAttributes } from 'astro/types';
+
+import Tag from './Tag.astro';
+type Props = CollectionEntry<'blog'>['data'] & HTMLAttributes<'a'>;
+
+const { href, title, description, pubDate, tags } = Astro.props;
+
+---
+<a 
+    href={href}
+    class="flex flex-col gap-3 border border-rose-400 rounded-2xl p-4 bg-zinc-800 text-gray-400 hover:bg-zinc-900">
+    <h3 class="text-slate-100 font-bold text-lg">{title}</h3>
+    <p >{ description }</p>
+    <FormattedDate date={pubDate} />
+    <div class="flex flex-row gap-2">
+        {tags.map(tag => {
+            return <Tag tag={tag}>{tag}</Tag>
+        })}
+    </div>
+</a>
