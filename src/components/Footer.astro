@@ -1,7 +1,15 @@
 ---
+import { Icon } from 'astro-icon'
 const today = new Date();
 ---
 
-<footer class="text-gray-400 font-normal text-center p-4">
-	&copy; {today.getFullYear()} Marcus Filipus. All rights reserved.
+<footer class="text-gray-400 font-normal text-center p-4 space-y-4">
+	<div class="flex flex-row gap-4 justify-evenly p-4">
+		<a href="https://twitter.com/Marcus_filipus"><Icon size="24" name="ri:twitter-fill" /></a>
+		<a href="https://www.instagram.com/marcus_filipus/"><Icon size="24" name="ri:instagram-fill" /></a>
+		<a href="https://github.com/MarcusQuirino"><Icon size="24" name="ri:github-fill" /></a>
+		<a href="https://www.linkedin.com/in/marcus-quirino-dev/"><Icon size="24" name="ri:linkedin-box-fill" /></a>
+	</div>
+
+	<p>&copy; {today.getFullYear()} Marcus Filipus. All rights reserved.</p>
 </footer>

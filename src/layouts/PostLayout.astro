@@ -20,29 +20,30 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   >
     <div class="p-4 w-screen md:max-w-3xl xl:max-w-6xl">
       <PostHeader />
-      <main class="p-1">
-        <main>
+      <main class="p-4">
           <article>
             {
               heroImage && (
                 <img src={heroImage} alt="" />
               )
             }
-            <h1 class="title">{title}</h1>
             <FormattedDate date={pubDate} />
             {
               updatedDate && (
-                <div class="last-updated-on">
+                <div>
                   Last updated on <FormattedDate date={updatedDate} />
                 </div>
               )
             }
+            <div class="p-4"/>
             <hr />
-            <slot />
+            <div class="p-4"/>
+            <div class="tracking-wide text-justify space-y-4 text-lg">
+              <slot/>
+            </div>
           </article>
-        </main>
-        <Footer />
       </main>
+      <Footer />
     </div>
   </body>
 </html>

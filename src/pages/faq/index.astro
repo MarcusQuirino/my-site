@@ -1,12 +1,68 @@
 ---
-import ComingSoon from "../../components/ComingSoon.astro";
+import Link from "../../components/Link.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
----
 
+const age = new Date().getFullYear() - 2003;
+const currentJob = {
+  job: "ADP",
+  link: "https://www.adp.com/",
+  title: "web developer",
+};
+---
 <BaseLayout
   title={`${SITE_TITLE} - FAQ`}
   description={SITE_DESCRIPTION}
 >
-  <ComingSoon name='FAQ' />
+  <main class="p-4">
+    <h1
+      class='text-4xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient'
+    >
+      FAQ
+    </h1>
+    <div class="p-4"/>
+    <div class="text-slate-100 text-lg space-y-4">
+      <h2 class="font-bold">Do you have a degree?</h2>
+      <p class="pb-2">
+        Currently trying to get my bachelor's degree in Software engineering on <Link href="https://www.pucrs.br/">PUCRS University</Link>
+      </p>
+      <hr>
+      <h2 class="font-bold">What is your favorite programming language?</h2>
+      <p class="pb-2">Typecript, but I really like the silly snake language for silly little projects</p>
+      <hr>
+      <h2 class="font-bold">What are your main interests in programing?</h2>
+      <p class="pb-2">I really like system arquitecture and performance</p>
+      <hr>
+      <h2 class="font-bold">How old are you?</h2>
+      <p class="pb-2">Rude! But I'm {age} years old</p>
+      <hr>
+      <h2 class="font-bold">What is your current job?</h2>
+      <p class="pb-2">I'm currently working at <Link href={ currentJob.link }>{ currentJob.job }</Link>as a { currentJob.title }</p>
+      <hr>
+      <h2 class="font-bold">Do you have hobbies?</h2>
+      <p class="pb-2">Programming, but I also like TTRPG, working out and play some games</p>
+      <hr>
+      <h2 class="font-bold">What are your pronoums?</h2>
+      <p class="pb-2">He/Him</p>
+      <hr>
+      <h2 class="font-bold">do you plan on learn a new lenguage?</h2>
+      <p class="pb-2">I'm currently learning Rust and plan to learn some OCaml when I befriend the borrow checker</p>
+      <hr>
+      <h2 class="font-bold">what languages do you speak?</h2>
+      <p class="pb-2">
+        <span class="line-through">Typescript</span> portuguese and english
+      </p>
+      <hr>
+      <h2 class="font-bold">Is Marcus Filipus your real name?</h2>
+      <p class="pb-2">
+        No. it's actually Marcus Filipe
+      </p>
+      <hr>
+      <h2 class="font-bold">So way do you use it?</h2>
+      <p class="pb-2">
+        A dear friend of mine used to call me Marcus Filipus and I just started to use as an artistic name
+      </p>
+      <hr>
+    </div>
+  </main>
 </BaseLayout>

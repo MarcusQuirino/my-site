@@ -3,38 +3,33 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import Link from "../components/Link.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-const age = new Date().getFullYear() - 2003;
-const currentJob = {
-  job: "ADP",
-  link: "https://www.adp.com/",
-};
+import BlogCard from "../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter(post => post.data.highligth)
+  .sort((a, b) => {
+    return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+  });
 ---
 
 <BaseLayout
   title={`${SITE_TITLE} - Home`}
   description={SITE_DESCRIPTION}
 >
-  <main class='text-gray-400 p-4 space-y-4 md:h-screen'>
+  <main class='text-gray-400 p-4 space-y-4'>
     <h1
-      class='text-2xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient'
+      class='text-2xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient md:text-4xl'
     >
       Hi, My name is Marcus :3
     </h1>
     <article class='space-y-4 font-light text-justify leading-relaxed'>
-      <p class=''>
-        I'm a software engineer born in a city with the silly name of Porto
-        Alegre in the south region of Brazil. I have {age} years and I'm currently
-        working at <Link href={currentJob.link}>
-          {currentJob.job}
-        </Link>. I'm a self-taught full-stack web developer and my
-        specialization lies in everything javascript-related from Node rest APIs
-        to React apps.
+      <p>
+        I'm a self-taught full-stack web developer on all thing javascript.
       </p>
-      <p class=''>
-        I like TTRPG, working out, and crafting software that makes people's
-        lives better. I love building projects and have a particular interest in
-        system architecture and performance. Currently really enjoying building
-        stuff with <Link href='https://www.typescriptlang.org/'>
+      <p>
+        Code is my art and I like to build software that makes people's
+        lives better. Usually with <Link href='https://www.typescriptlang.org/'>
           Typescript
         </Link>, <Link href='https://create.t3.gg/'>T3 stack</Link>, and <Link
           href='https://aws.amazon.com/pt/'
@@ -42,35 +37,51 @@ const currentJob = {
           AWS
         </Link>.
       </p>
-      <p class=''>
-        I love to talk about myself and the things I like so if you are
+      <p>
+        If you are
         interested professionally with me, you can check my <Link href='/cv'>
           CV
-        </Link>, or feel free to connect with me through any of my social media
-        or check my FAQ.
+        </Link>. Also feel free to connect with me through any of my social media
+        or check my <Link href='/faq'>FAQ</Link>.
       </p>
-      <p class=''>with that out of the: welcome to my site!</p>
+      <p>with that out of the way: welcome to my site!</p>
     </article>
     <section class='flex flex-col gap-4'>
       <h2 class='text-slate-100 text-xl font-semibold py-4'>
-        Things I'm proud of
+        Things I've worked on
       </h2>
       <div class='flex flex-col gap-3 md:grid grid-cols-2'>
         <ProjectCard
-          href="/"
+          href='/'
           title='this site'
           tags={["astro", "typescript"]}
         >
           it's literally this exact site
         </ProjectCard>
         <ProjectCard
-          href="https://p4p-site.vercel.app"
+          href='https://p4p-site.vercel.app'
           title='p4p site'
           tags={["html", "css"]}
         >
           site for my bf
         </ProjectCard>
       </div>
+    </section>
+    <section>
+      <h2 class='text-slate-100 text-xl font-semibold py-4'>Some blog posts</h2>
+      <div class='flex flex-col gap-3'>
+        <ul class='space-y-4'>
+          {
+            posts.map(post => (
+              <li>
+                <BlogCard {...post} />
+              </li>
+            ))
+          }
+        </ul>
+        <p class='text-center text-slate-100 text-xl'>more posts...</p>
+      </div>
+      <div id='social_midia'></div>
     </section>
   </main>
 </BaseLayout>
