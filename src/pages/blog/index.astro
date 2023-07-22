@@ -10,7 +10,7 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <BaseLayout title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION}>
-  <div>
+  <div class="p-4">
     <ul class="space-y-4">
       {
         posts.map((post) => (

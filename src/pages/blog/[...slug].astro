@@ -21,8 +21,8 @@ const { Content } = await post.render();
   title={title}
   description={description}
 >
-  <main class='p-4'>
-    <article class='text-slate-100'>
+  <div class='p-4'>
+    <div class='text-slate-100'>
       {
         heroImage && (
           <img
@@ -49,8 +49,10 @@ const { Content } = await post.render();
         >
           {post.data.title}
         </h1>
-        <Content />
+		<article class='prose prose-lg dark:prose-invert max-w-none'>
+        	<Content />
+		</article>
       </div>
-    </article>
-  </main>
+    </div>
+</div>
 </BaseLayout>
