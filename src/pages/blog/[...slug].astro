@@ -1,6 +1,6 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 
 export async function getStaticPaths() {
@@ -17,7 +17,7 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 const { Content } = await post.render();
 ---
 
-<BaseLayout
+<Layout
   title={title}
   description={description}
 >
@@ -49,10 +49,10 @@ const { Content } = await post.render();
         >
           {post.data.title}
         </h1>
-		<article class='prose prose-lg dark:prose-invert max-w-none'>
-        	<Content />
-		</article>
+        <article class='prose prose-lg dark:prose-invert max-w-none'>
+          <Content />
+        </article>
       </div>
     </div>
-</div>
-</BaseLayout>
+  </div>
+</Layout>
