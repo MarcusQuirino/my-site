@@ -11,8 +11,14 @@ export default defineConfig({
   output: 'static',
   adapter: vercel({
     analytics: true,
+    // imageService: true,
+    // imagesConfig: {
+    //   sizes: [320, 640, 1200],
+    //   formats: ["image/webp"]
+    // }
   }),
   experimental: {
     viewTransitions: true,
+    assets: true
   },
 });
