@@ -32,16 +32,16 @@ const blog = defineCollection({
 
 const reviews = defineCollection({
 	schema: z.object({
-		name: z.string().optional(),
-		image: z.string().optional(),
+		id: z.number(),
+		name: z.string(),
+		image: z.string(),
 		afiliateLink: z.string().optional(),
 		using: z.boolean().default(true),
 		pubDate: z
 			.string()
 			.or(z.date())
-			.transform((val) => new Date(val))
-			.optional(),
-		category: category.optional(),
+			.transform((val) => new Date(val)),
+		category: category,
 	}),
 });
 

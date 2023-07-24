@@ -1,12 +1,33 @@
 ---
-import ComingSoon from "../../components/ComingSoon.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import ReviewCard from "../../components/ReviewCard.astro";
+
+const products = (await getCollection("reviews"))
+  .filter(product => product.data.using)
+  .sort((a, b) => a.data.id - b.data.id);
 ---
 
 <Layout
   title={`${SITE_TITLE} - Setup`}
   description={SITE_DESCRIPTION}
 >
-  <ComingSoon name='setup' />
+  <div class='p-4 space-y-8'>
+    <h1
+      class='text-4xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient'
+    >
+      Setup
+    </h1>
+    <p class='text-gray-400 font-light text-justify leading-relaxed md:text-xl'>
+      This is a curated list of things I used dayly to get things done. Both
+      hardware and software. Here you will find some brief reviews of the my
+      tools and maybe, if you really like it, you can buy it using my affiliate
+      links.
+    </p>
+    <h2 class='text-slate-100 text-2xl font-bold'>Hardware</h2>
+    <div class='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
+      {products.map(product => <ReviewCard {...product} />)}
+    </div>
+  </div>
 </Layout>
