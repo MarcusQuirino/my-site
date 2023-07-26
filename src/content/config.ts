@@ -10,7 +10,7 @@ export type Tags = z.infer<typeof tags>
 export type Category = z.infer<typeof category>
 
 const blog = defineCollection({
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		author: z.string().default('Marcus Filipus'),
 		title: z.string(),
 		description: z.string(),
@@ -26,15 +26,15 @@ const blog = defineCollection({
 			.string()
 			.optional()
 			.transform((str) => (str ? new Date(str) : undefined)),
-		heroImage: z.string().optional(),
+		heroImage: image()
 	}),
 });
 
 const reviews = defineCollection({
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		id: z.number(),
 		name: z.string(),
-		image: z.string(),
+		image: image(),
 		afiliateLink: z.string().optional(),
 		using: z.boolean().default(true),
 		pubDate: z

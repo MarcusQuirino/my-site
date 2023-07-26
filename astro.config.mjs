@@ -14,7 +14,7 @@ export default defineConfig({
     imageService: true,
     imagesConfig: {
       sizes: [320, 640, 1200],
-      formats: ["image/webp"]
+      formats: ['image/avif']
     }
   }),
   experimental: {
