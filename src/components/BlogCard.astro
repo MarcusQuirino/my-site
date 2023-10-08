@@ -1,25 +1,33 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
-import type { HTMLAttributes } from 'astro/types';
+import type { CollectionEntry } from 'astro:content'
+import FormattedDate from '../components/FormattedDate.astro'
+import type { HTMLAttributes } from 'astro/types'
 
-import Tag from './Tag.astro';
-type Props = CollectionEntry<'blog'> & HTMLAttributes<'a'>;
+import Tag from './Tag.astro'
+type Props = CollectionEntry<'blog'> & HTMLAttributes<'a'>
 
-const { data, slug } = Astro.props;
+const { data, slug } = Astro.props
 
-const { title, description, pubDate, tags } = data;
-
+const { title, description, pubDate, tags } = data
 ---
-<a 
-    href={`/blog/${slug}/`}
-    class="flex flex-col gap-2 border border-rose-400 rounded-2xl p-4 bg-zinc-800 text-gray-400 max-h-40 hover:bg-zinc-900">
-    <h3 class="text-slate-100 font-bold text-lg">{title}</h3>
-    <p class="line-clamp-1 text-ellipsis">{ description }</p>
-    <FormattedDate date={pubDate} />
-    <div class="flex flex-row gap-2 overflow-auto">
-        {tags.map(tag => {
-            return <Tag tag={tag}>{tag}</Tag>
-        })}
-    </div>
+
+<a
+  href={`/blog/${slug}/`}
+  class='flex flex-col gap-2 border border-rose-400 rounded-2xl p-4 bg-zinc-800 text-gray-400 max-h-40 hover:bg-zinc-900'
+>
+  <h3
+    class='text-slate-100 font-bold text-lg'
+    transition:name={title}
+  >
+    {title}
+  </h3>
+  <p class='line-clamp-1 text-ellipsis'>{description}</p>
+  <FormattedDate date={pubDate} />
+  <div class='flex flex-row gap-2 overflow-auto'>
+    {
+      tags.map(tag => {
+        return <Tag tag={tag}>{tag}</Tag>
+      })
+    }
+  </div>
 </a>

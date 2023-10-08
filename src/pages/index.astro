@@ -1,16 +1,16 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import Link from "../components/Link.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import Layout from "../layouts/Layout.astro";
-import BlogCard from "../components/BlogCard.astro";
-import { getCollection } from "astro:content";
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts'
+import Link from '../components/Link.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+import Layout from '../layouts/Layout.astro'
+import BlogCard from '../components/BlogCard.astro'
+import { getCollection } from 'astro:content'
 
-const posts = (await getCollection("blog"))
+const posts = (await getCollection('blog'))
   .filter(post => post.data.highligth)
   .sort((a, b) => {
-    return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
-  });
+    return a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+  })
 ---
 
 <Layout
@@ -23,50 +23,55 @@ const posts = (await getCollection("blog"))
     >
       Hi, My name is Marcus :3
     </h1>
-    <article
-      class='space-y-4 font-light text-justify leading-relaxed md:text-xl'
-    >
+    <article class='space-y-4 font-light text-justify leading-relaxed md:text-xl'>
+      <p>I'm a self-taught full-stack web developer on all things javascript.</p>
       <p>
-        I'm a self-taught full-stack web developer on all things javascript.
-      </p>
-      <p>
-        Code is my art and I like to build software that makes people's lives
-        better. Usually with <Link href='https://www.typescriptlang.org/'>
+        Code is my art and I like to build software that makes people's lives better. Usually with <Link
+          href='https://www.typescriptlang.org/'
+        >
           Typescript
-        </Link>, <Link href='https://create.t3.gg/'>T3 stack</Link>, and <Link
-          href='https://aws.amazon.com/pt/'
-        >
-          AWS
-        </Link>.
+        </Link> and <Link href='https://nextjs.org/'>Nextjs</Link>
       </p>
       <p>
-        If you are interested professionally with me, you can check my <Link
-          href='/cv'
+        If you are interested professionally with me, you can check my <Link href='/cv'>CV</Link>.
+        Also feel free to connect with me through any of my social media or check my <Link
+          href='/faq'
         >
-          CV
-        </Link>. Also feel free to connect with me through any of my social
-        media or check my <Link href='/faq'>FAQ</Link>.
+          FAQ
+        </Link>.
       </p>
       <p>with that out of the way: welcome to my site!</p>
     </article>
     <section class='flex flex-col gap-4'>
-      <h2 class='text-slate-100 text-xl font-semibold py-4'>
-        Things I've worked on
-      </h2>
+      <h2 class='text-slate-100 text-xl font-semibold py-4'>Things I've worked on</h2>
       <div class='flex flex-col gap-3 md:grid grid-cols-2'>
         <ProjectCard
           href='/'
           title='this site'
-          tags={["astro", "typescript"]}
+          tags={['astro', 'typescript']}
         >
           it's literally this exact site
         </ProjectCard>
         <ProjectCard
           href='https://p4p-site.vercel.app'
           title='p4p site'
-          tags={["html", "css"]}
+          tags={['html', 'css']}
         >
           site for my bf
+        </ProjectCard>
+        <ProjectCard
+          href='https://www.pureai.com.br/'
+          title='PureAI'
+          tags={['next', 'typescript']}
+        >
+          site for the startup I work at
+        </ProjectCard>
+        <ProjectCard
+          href='https://www.freefromclub.com.br/'
+          title='Free From Club'
+          tags={['react', 'typescript']}
+        >
+          the mobile app not the site
         </ProjectCard>
       </div>
     </section>
