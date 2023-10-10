@@ -1,33 +1,34 @@
 ---
-import type { Tags } from "../content/config";
-import { twMerge } from "tailwind-merge";
+import type { Tags } from '../content/config'
+import { twMerge } from 'tailwind-merge'
 
 interface Props {
-    tag: Tags;
+  tag: Tags
 }
 
-const { tag } = Astro.props;
+const { tag } = Astro.props
 
 const tagColors = new Map<Tags, string>([
-    ["typescript", "border-blue-400"],
-    ["javascript", "border-amber-400"],
-    ["react", "border-cyan-400"],
-    ["next", "border-stone-600"],
-    ["astro", "border-orange-400"],
-    ["node", "border-emerald-400"],
-    ["rust", "border-red-400"],
-    ["python", "border-sky-400"],
-    ["docker", "border-indigo-400"],
-    ["aws", "border-yellow-400"],
-    ["html", "border-pink-400"],
-    ["css", "border-violet-400"],
-    ["dev", "border-cyan-600"],
-    ["life", "border-emerald-600"],
-    ["misc", "border-stone-400"],
-]);
+  ['typescript', 'border-blue-400'],
+  ['javascript', 'border-amber-400'],
+  ['react', 'border-cyan-400'],
+  ['next', 'border-stone-600'],
+  ['astro', 'border-orange-400'],
+  ['node', 'border-emerald-400'],
+  ['rust', 'border-red-400'],
+  ['python', 'border-sky-400'],
+  ['docker', 'border-indigo-400'],
+  ['aws', 'border-yellow-400'],
+  ['html', 'border-pink-400'],
+  ['css', 'border-violet-400'],
+  ['dev', 'border-cyan-600'],
+  ['life', 'border-emerald-600'],
+  ['misc', 'border-stone-400'],
+])
 
-const borderColor = tagColors.get(tag);
+const borderColor = tagColors.get(tag)
 ---
-<div class={twMerge("border rounded-lg px-2 text-slate-100", borderColor)}>
-    <slot />
+
+<div class={twMerge('border rounded-lg px-2 text-slate-100', borderColor)}>
+  <slot />
 </div>
