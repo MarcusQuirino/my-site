@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content'
+import { glob } from 'astro/loaders'
 
 const tagValues = [
   'typescript',
@@ -26,6 +27,7 @@ export type Tags = z.infer<typeof tags>
 export type Category = z.infer<typeof category>
 
 const blog = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: ({ image }) =>
     z.object({
       author: z.string().default('Marcus Filipus'),
@@ -48,6 +50,7 @@ const blog = defineCollection({
 })
 
 const reviews = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/reviews' }),
   schema: ({ image }) =>
     z.object({
       id: z.number(),
