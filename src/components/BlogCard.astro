@@ -6,28 +6,24 @@ import type { HTMLAttributes } from 'astro/types'
 import Tag from './Tag.astro'
 type Props = CollectionEntry<'blog'> & HTMLAttributes<'a'>
 
-const { data, slug } = Astro.props
+const { data, id } = Astro.props
 
 const { title, description, pubDate, tags } = data
 ---
 
 <a
-  href={`/blog/${slug}/`}
-  class='flex flex-col gap-2 border border-rose-400 rounded-2xl p-4 bg-zinc-800 text-gray-400 hover:bg-zinc-900'
+  href={`/blog/${id}/`}
+  class='flex h-full flex-col gap-2 rounded-2xl border border-rose-400 bg-zinc-800 p-4 text-zinc-300 no-underline hover:bg-zinc-900'
 >
   <h3
-    class='text-slate-100 font-bold text-lg'
+    class='text-lg font-bold text-slate-100'
     transition:name={title}
   >
     {title}
   </h3>
-  <p class='line-clamp-1 text-ellipsis'>{description}</p>
-  <FormattedDate date={pubDate} />
-  <div class='flex flex-row gap-2 overflow-auto'>
-    {
-      tags.map(tag => {
-        return <Tag tag={tag}>{tag}</Tag>
-      })
-    }
+  <p class='line-clamp-2 text-sm text-zinc-400'>{description}</p>
+  <div class='mt-auto text-sm text-zinc-400'><FormattedDate date={pubDate} /></div>
+  <div class='flex flex-row flex-wrap gap-2'>
+    {tags.map(tag => <Tag tag={tag}>{tag}</Tag>)}
   </div>
 </a>

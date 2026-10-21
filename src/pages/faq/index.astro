@@ -5,9 +5,9 @@ import Layout from '../../layouts/Layout.astro'
 
 const age = new Date().getFullYear() - 2003
 const currentJob = {
-  job: 'ADP ',
+  job: 'ADP',
   link: 'https://www.adp.com/',
-  title: 'web developer',
+  title: 'software engineer on mission-critical billing systems',
 }
 ---
 
@@ -15,7 +15,7 @@ const currentJob = {
   title={`${SITE_TITLE} - FAQ`}
   description={SITE_DESCRIPTION}
 >
-  <main class='p-4'>
+  <main class='pt-4'>
     <h1
       class='text-4xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient'
     >
@@ -25,29 +25,27 @@ const currentJob = {
     <div class='text-slate-100 text-lg space-y-4'>
       <h2 class='font-bold'>Do you have a degree?</h2>
       <p class='pb-2'>
-        Currently trying to get my bachelor's degree in Software engineering on <Link
-          href='https://www.pucrs.br/'
-        >
-          PUCRS University
-        </Link>
+        I studied Software Engineering at <Link href='https://www.pucrs.br/'>PUCRS</Link>, but
+        most of what I know I learned by shipping
       </p>
       <hr />
       <h2 class='font-bold'>What is your favorite programming language?</h2>
       <p class='pb-2'>
-        Typecript, but I really like the silly snake language for silly little projects
+        TypeScript, but I really like the silly snake language for silly little projects
       </p>
       <hr />
-      <h2 class='font-bold'>What are your main interests in programing?</h2>
-      <p class='pb-2'>I really like system arquitecture and performance</p>
+      <h2 class='font-bold'>What are your main interests in programming?</h2>
+      <p class='pb-2'>
+        System architecture, performance, and lately building AI systems that help me ship better and
+        faster
+      </p>
       <hr />
       <h2 class='font-bold'>How old are you?</h2>
       <p class='pb-2'>Rude! But I'm {age} years old</p>
       <hr />
       <h2 class='font-bold'>What is your current job?</h2>
       <p class='pb-2'>
-        I'm currently working at <Link href={currentJob.link}>
-          {currentJob.job}
-        </Link>as a {currentJob.title}
+        I'm currently working at <Link href={currentJob.link}>{currentJob.job}</Link> as a {currentJob.title}. I also run <Link href='https://southlikesoftware.com'>Southlike Software</Link>, a boutique AI automation agency
       </p>
       <hr />
       <h2 class='font-bold'>Do you have hobbies?</h2>

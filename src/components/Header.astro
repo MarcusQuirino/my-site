@@ -1,25 +1,25 @@
 ---
 import HeaderLink from './HeaderLink.astro'
-import { SITE_TITLE } from '../consts'
+import { SITE_TITLE, SOUTHLIKE_URL } from '../consts'
 import { Image } from 'astro:assets'
 import pfp from '../assets/pfp.jpg'
 ---
 
-<header class='text-slate-100 p-4 space-y-4'>
-  <div class='flex flex-row items-end gap-4'>
+<header class='flex flex-wrap items-center gap-4 px-4 pt-2 pb-6 text-slate-100'>
+  <a href='/' class='flex items-center gap-3 mr-auto'>
     <Image
       src={pfp}
       format='avif'
       alt='A little fat Garfield sitting on the ground'
-      class='rounded-full h-14 w-14'
+      class='h-12 w-12 rounded-full border-2 border-zinc-700 object-cover'
     />
-    <h2 class='text-2xl font-semibold text-slate-100'>{SITE_TITLE}</h2>
-  </div>
-  <nav class='space-x-2 text-rose-400 pl-1 md:space-x-5'>
+    <span class='text-xl font-bold'>{SITE_TITLE}</span>
+  </a>
+  <nav class='flex gap-5 font-medium text-rose-400'>
     <HeaderLink href='/'>Home</HeaderLink>
     <HeaderLink href='/blog'>Blog</HeaderLink>
-    <!-- <HeaderLink href='/setup'>Setup</HeaderLink> -->
-    <!-- <HeaderLink href="/guestbook">Guestbook</HeaderLink> -->
+    <HeaderLink href='/cv'>CV</HeaderLink>
     <HeaderLink href='/faq'>FAQ</HeaderLink>
+    <HeaderLink href={SOUTHLIKE_URL} target='_blank' rel='noopener noreferrer'>Southlike</HeaderLink>
   </nav>
 </header>
