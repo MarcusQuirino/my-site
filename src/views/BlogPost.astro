@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Layout from '../layouts/Layout.astro'
+import { SITE_TITLE } from '../consts'
+import FormattedDate from '../components/FormattedDate.astro'
+import { Image } from 'astro:assets'
+import { LOCALE_TAGS, getLang } from '../i18n'
+
+type Props = { entry: CollectionEntry<'blog'> }
+
+const post = Astro.props.entry
+const lang = getLang(Astro.currentLocale)
+const updatedLabel = { en: 'Last updated on', 'pt-br': 'Atualizado em' }[lang]
+const { title, description, pubDate, updatedDate, heroImage, author, tags } = post.data
+const { Content } = await render(post)
+---
+
+<Layout
+  title={`${title} | ${SITE_TITLE}`}
+  description={description}
+  type='article'
+  image={heroImage.src}
+  jsonLd={[
+    {
+      '@type': 'BlogPosting',
+      inLanguage: LOCALE_TAGS[lang],
+      headline: title,
+      description,
+      image: new URL(heroImage.src, Astro.site).href,
+      datePublished: pubDate.toISOString(),
+      dateModified: (updatedDate ?? pubDate).toISOString(),
+      url: new URL(Astro.url.pathname, Astro.site).href,
+      mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+      keywords: tags,
+      author: author === SITE_TITLE ? { '@id': new URL('/#person', Astro.site).href } : { '@type': 'Person', name: author },
+      publisher: { '@id': new URL('/#person', Astro.site).href },
+    },
+  ]}
+>
+  <div class='p-4'>
+    <div class='text-slate-100'>
+      {
+        heroImage && (
+          <Image
+            format='avif'
+            class='w-screen'
+            src={heroImage}
+            alt=''
+          />
+        )
+      }
+      <FormattedDate date={pubDate} />
+      {
+        updatedDate && (
+          <div>
+            {updatedLabel} <FormattedDate date={updatedDate} />
+          </div>
+        )
+      }
+      <div class='p-4'></div>
+      <hr />
+      <div class='p-4'></div>
+      <div class='tracking-wide text-left space-y-4 text-lg md:text-justify'>
+        <h1
+          class='text-2xl font-semibold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300 animate-gradient md:text-3xl'
+          transition:name={post.data.title}
+        >
+          {post.data.title}
+        </h1>
+        <article class='prose prose-lg prose-invert max-w-none'>
+          <Content />
+        </article>
+      </div>
+    </div>
+  </div>
+</Layout>

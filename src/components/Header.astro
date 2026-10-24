@@ -3,23 +3,33 @@ import HeaderLink from './HeaderLink.astro'
 import { SITE_TITLE, SOUTHLIKE_URL } from '../consts'
 import { Image } from 'astro:assets'
 import pfp from '../assets/pfp.jpg'
+import { getLang, localizePath } from '../i18n'
+import LangToggle from './LangToggle.astro'
+import { ui } from '../i18n/ui'
+
+const lang = getLang(Astro.currentLocale)
+const t = ui[lang]
+const home = localizePath('/', lang).replace(/\/$/, '') || '/'
 ---
 
 <header class='flex flex-wrap items-center gap-4 px-4 pt-2 pb-6 text-slate-100'>
-  <a href='/' class='flex items-center gap-3 mr-auto'>
+  <a href={localizePath('/', lang)} class='flex items-center gap-3 mr-auto'>
     <Image
       src={pfp}
       format='avif'
-      alt='A little fat Garfield sitting on the ground'
+      alt={t.pfpAlt}
       class='h-12 w-12 rounded-full border-2 border-zinc-700 object-cover'
     />
     <span class='text-xl font-bold'>{SITE_TITLE}</span>
   </a>
+  <div class='sm:order-last'>
+    <LangToggle />
+  </div>
   <nav class='flex gap-5 font-medium text-rose-400'>
-    <HeaderLink href='/'>Home</HeaderLink>
-    <HeaderLink href='/blog'>Blog</HeaderLink>
-    <HeaderLink href='/cv'>CV</HeaderLink>
-    <HeaderLink href='/faq'>FAQ</HeaderLink>
-    <HeaderLink href={SOUTHLIKE_URL} target='_blank' rel='noopener noreferrer'>Southlike</HeaderLink>
+    <HeaderLink href={home} exact>{t.nav.home}</HeaderLink>
+    <HeaderLink href={localizePath('/blog', lang)}>{t.nav.blog}</HeaderLink>
+    <HeaderLink href={localizePath('/cv', lang)}>{t.nav.cv}</HeaderLink>
+    <HeaderLink href={localizePath('/faq', lang)}>{t.nav.faq}</HeaderLink>
+    <HeaderLink href={SOUTHLIKE_URL} target='_blank' rel='noopener noreferrer'>{t.nav.southlike}</HeaderLink>
   </nav>
 </header>

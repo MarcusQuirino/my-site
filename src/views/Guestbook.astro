@@ -1,0 +1,18 @@
+---
+import ComingSoon from "../components/ComingSoon.astro";
+import { SITE_TITLE } from "../consts";
+import Layout from "../layouts/Layout.astro";
+import { getLang } from "../i18n";
+import { ui } from "../i18n/ui";
+
+const lang = getLang(Astro.currentLocale);
+const name = { en: "Guestbook", "pt-br": "Livro de visitas" }[lang];
+---
+
+<Layout
+  title={`${name} | ${SITE_TITLE}`}
+  description={ui[lang].description}
+  noindex
+>
+  <ComingSoon name={name} />
+</Layout>

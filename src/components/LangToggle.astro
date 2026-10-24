@@ -1,0 +1,43 @@
+---
+// Flag switch between English and Portuguese. The whole pill links to the
+// current page in the other language; the knob marks the active language and
+// slides across on navigation thanks to its shared transition:name.
+import { Icon } from 'astro-icon/components'
+import { LANGS, LOCALE_TAGS, getLang, localizePath } from '../i18n'
+import { ui } from '../i18n/ui'
+
+const lang = getLang(Astro.currentLocale)
+const otherLang = LANGS.find(l => l !== lang)!
+const flags = [
+  { lang: 'en', icon: 'circle-flags:us' },
+  { lang: 'pt-br', icon: 'circle-flags:br' },
+] as const
+---
+
+<a
+  href={localizePath(Astro.url.pathname, otherLang)}
+  hreflang={LOCALE_TAGS[otherLang]}
+  title={ui[lang].switchLang}
+  aria-label={ui[lang].switchLang}
+  class='group relative flex items-center gap-1.5 rounded-full border border-zinc-600 bg-zinc-800 p-1 hover:border-rose-400'
+>
+  <span
+    transition:name='lang-toggle-knob'
+    class:list={[
+      'absolute top-px h-[34px] w-[34px] rounded-full border-2 border-rose-400',
+      lang === 'en' ? 'left-px' : 'left-[35px]',
+    ]}
+  ></span>
+  {
+    flags.map(f => (
+      <Icon
+        name={f.icon}
+        aria-hidden='true'
+        class:list={[
+          'relative h-7 w-7 transition',
+          f.lang !== lang && 'opacity-60 saturate-50 group-hover:opacity-100 group-hover:saturate-100',
+        ]}
+      />
+    ))
+  }
+</a>

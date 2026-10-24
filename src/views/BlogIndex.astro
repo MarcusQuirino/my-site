@@ -1,0 +1,34 @@
+---
+import { SITE_TITLE } from "../consts";
+import Layout from "../layouts/Layout.astro";
+import BlogCard from "../components/BlogCard.astro";
+import { getLang } from "../i18n";
+import { getLocalizedCollection } from "../i18n/content";
+
+const lang = getLang(Astro.currentLocale);
+const description = {
+  en: `Blog by ${SITE_TITLE} (Marcus Filipe), AI developer and software engineer in Porto Alegre, Brazil.`,
+  "pt-br": `Blog do ${SITE_TITLE} (Marcus Filipe), desenvolvedor de IA e engenheiro de software em Porto Alegre.`,
+}[lang];
+
+const posts = (await getLocalizedCollection("blog", lang)).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+);
+---
+
+<Layout
+  title={`Blog | ${SITE_TITLE}`}
+  description={description}
+>
+  <div class='p-4'>
+    <ul class='space-y-4'>
+      {
+        posts.map(post => (
+          <li>
+            <BlogCard {...post} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>

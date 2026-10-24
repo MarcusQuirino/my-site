@@ -1,0 +1,66 @@
+---
+import { SITE_TITLE, SOUTHLIKE_URL } from '../consts'
+import Layout from '../layouts/Layout.astro'
+import { getLang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+const lang = getLang(Astro.currentLocale)
+const age = new Date().getFullYear() - 2003
+
+const link = (href: string, text: string) =>
+  `<a href="${href}" target="_blank" rel="noopener noreferrer" class="text-rose-400 hover:text-rose-300">${text}</a>`
+const pucrs = link('https://www.pucrs.br/', 'PUCRS')
+const adp = link('https://www.adp.com/', 'ADP')
+const southlike = link(SOUTHLIKE_URL, 'Southlike Software')
+
+// Answers are HTML
+const faq: Record<typeof lang, [string, string][]> = {
+  en: [
+    ['Do you have a degree?', `I studied Software Engineering at ${pucrs}, but most of what I know I learned by shipping`],
+    ['What is your favorite programming language?', 'TypeScript, but I really like the silly snake language for silly little projects'],
+    ['What are your main interests in programming?', 'System architecture, performance, and lately building AI systems that help me ship better and faster'],
+    ['How old are you?', `Rude! But I'm ${age} years old`],
+    ['What is your current job?', `I'm currently working at ${adp} as a software engineer on mission-critical billing systems. I also run ${southlike}, a boutique AI automation agency`],
+    ['Do you have hobbies?', 'Programming, but I also like TTRPG, working out and play some games'],
+    ['what languages do you speak?', "<span class='line-through'>Typescript</span> portuguese and english"],
+    ['Is Marcus Filipus your real name?', "No. it's actually Marcus Filipe"],
+    ['So way do you use it?', 'A dear friend of mine used to call me Marcus Filipus and I just started to use as an artistic name'],
+  ],
+  'pt-br': [
+    ['Você tem diploma?', `Estudei Engenharia de Software na ${pucrs}, mas a maior parte do que eu sei aprendi colocando coisa em produção`],
+    ['Qual é a sua linguagem de programação favorita?', 'TypeScript, mas eu gosto muito da linguagem da cobrinha pra projetinhos bobos'],
+    ['Quais são seus principais interesses em programação?', 'Arquitetura de sistemas, performance e, ultimamente, construir sistemas de IA que me ajudam a entregar melhor e mais rápido'],
+    ['Quantos anos você tem?', `Que falta de educação! Mas eu tenho ${age} anos`],
+    ['Qual é o seu trabalho atual?', `Atualmente trabalho na ${adp} como engenheiro de software em sistemas de faturamento de missão crítica. Também toco a ${southlike}, uma agência boutique de automação com IA`],
+    ['Você tem hobbies?', 'Programar, mas também curto RPG de mesa, academia e jogar uns joguinhos'],
+    ['Quais idiomas você fala?', "<span class='line-through'>TypeScript</span> português e inglês"],
+    ['Marcus Filipus é o seu nome de verdade?', 'Não. Na verdade é Marcus Filipe'],
+    ['Então por que você usa?', 'Um grande amigo meu me chamava de Marcus Filipus e eu comecei a usar como nome artístico'],
+  ],
+}
+---
+
+<Layout
+  title={`FAQ | ${SITE_TITLE}`}
+  description={ui[lang].description}
+>
+  <main class='pt-4'>
+    <h1
+      class='text-4xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300 animate-gradient'
+    >
+      FAQ
+    </h1>
+    <div class='p-4'></div>
+    <div class='text-slate-100 text-lg space-y-4'>
+      {
+        faq[lang].map(([question, answer]) => (
+          <>
+            <h2 class='font-bold'>{question}</h2>
+            <p class='pb-2' set:html={answer} />
+            <hr />
+          </>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

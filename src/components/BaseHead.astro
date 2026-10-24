@@ -2,45 +2,131 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
+import pfp from '../assets/pfp.jpg';
+import { PERSON, SITE_TITLE, SOCIALS, SOUTHLIKE_URL } from '../consts';
+import { LANGS, DEFAULT_LANG, LOCALE_TAGS, OG_LOCALES, getLang, localizePath } from '../i18n';
+import { ui } from '../i18n/ui';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	type?: 'website' | 'article';
+	noindex?: boolean;
+	// Extra JSON-LD nodes for this page (e.g. ProfilePage, BlogPosting)
+	jsonLd?: Record<string, unknown>[];
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const { title, description, image = pfp.src, type = 'website', noindex = false, jsonLd = [] } = Astro.props;
 
-const { title, description, image = '../assets/pfp.jpg' } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const site = Astro.site!;
+const canonicalURL = new URL(Astro.url.pathname, site);
+// Every page exists in every language under the same path (see src/i18n/content.ts)
+const alternates = LANGS.map(l => ({ hreflang: LOCALE_TAGS[l], href: new URL(localizePath(Astro.url.pathname, l), site) }));
+const defaultAlternate = new URL(localizePath(Astro.url.pathname, DEFAULT_LANG), site);
+const imageURL = new URL(image, site);
+
+const personId = new URL('/#person', site).href;
+const graph = [
+	{
+		'@type': 'WebSite',
+		'@id': new URL('/#website', site).href,
+		url: site.href,
+		name: SITE_TITLE,
+		description: t.description,
+		inLanguage: LANGS.map(l => LOCALE_TAGS[l]),
+		publisher: { '@id': personId },
+	},
+	{
+		'@type': 'Person',
+		'@id': personId,
+		name: PERSON.name,
+		alternateName: PERSON.alternateNames,
+		givenName: 'Marcus',
+		additionalName: 'Filipe',
+		familyName: 'Quirino',
+		url: site.href,
+		image: new URL(pfp.src, site).href,
+		email: `mailto:${PERSON.email}`,
+		jobTitle: t.jobTitle,
+		description: t.description,
+		address: {
+			'@type': 'PostalAddress',
+			addressLocality: PERSON.city,
+			addressRegion: PERSON.region,
+			addressCountry: PERSON.country,
+		},
+		homeLocation: { '@type': 'City', name: `${PERSON.city}, Brazil` },
+		worksFor: [
+			{ '@type': 'Organization', name: 'Southlike Software', url: SOUTHLIKE_URL },
+			{ '@type': 'Organization', name: 'ADP', url: 'https://www.adp.com/' },
+		],
+		alumniOf: { '@type': 'CollegeOrUniversity', name: 'PUCRS', url: 'https://www.pucrs.br/' },
+		knowsAbout: [
+			'Artificial intelligence',
+			'AI agents',
+			'AI automation',
+			'Software engineering',
+			'TypeScript',
+			'Node.js',
+			'React',
+			'Event-driven architecture',
+			'Billing systems',
+		],
+		knowsLanguage: ['en', 'pt-BR'],
+		sameAs: SOCIALS.map(s => s.href),
+	},
+	...jsonLd,
+];
+const structuredData = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL(localizePath('/rss.xml', lang), site)} />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
 <meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#18181b" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+{alternates.map(a => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+<link rel="alternate" hreflang="x-default" href={defaultAlternate} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="author" content={PERSON.name} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+<meta name="geo.region" content={`${PERSON.country}-${PERSON.region}`} />
+<meta name="geo.placename" content={PERSON.city} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content={OG_LOCALES[lang]} />
+{LANGS.filter(l => l !== lang).map(l => <meta property="og:locale:alternate" content={OG_LOCALES[l]} />)}
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:image:alt" content={title} />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content={PERSON.twitter} />
+<meta name="twitter:creator" content={PERSON.twitter} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+
+<!-- Structured data -->
+<script type="application/ld+json" is:inline set:html={structuredData} />

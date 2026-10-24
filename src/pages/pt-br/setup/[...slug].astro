@@ -1,0 +1,10 @@
+---
+import Review from '../../../views/Review.astro'
+import { getEntryPaths } from '../../../i18n/content'
+
+export const getStaticPaths = () => getEntryPaths('reviews', 'pt-br')
+
+const { entry } = Astro.props
+---
+
+<Review entry={entry} />
