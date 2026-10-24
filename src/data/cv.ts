@@ -1,4 +1,4 @@
-// Edit this file to update /cv. Dates marked TODO are unknown and should be filled in.
+// Edit this file to update /cv.
 
 export type Experience = {
   company: string
@@ -11,44 +11,43 @@ export type Experience = {
 }
 
 export const headline =
-  'Software engineer. Mission-critical billing systems by day, AI systems that ship faster by night.'
+  'Full-stack software engineer specialized in mission-critical payment and billing systems. I build AI systems that help me ship better and faster.'
 
 export const experience: Experience[] = [
   {
     company: 'Southlike Software',
     url: 'https://southlikesoftware.com',
     title: 'Founder',
-    start: '2025', // TODO: confirm start date
+    start: '2023',
     summary:
-      'Boutique AI automation agency for businesses. I run the engagements end to end: audit, design, build, and the systems that keep it running.',
+      'Boutique AI automation agency for businesses. Agents, workflow automation and systems that connect AI to the real world. Not chatbots answering questions: systems that do the work on their own.',
   },
   {
-    company: 'ADP Brasil Labs',
+    company: 'ADP',
     url: 'https://www.adp.com/',
-    title: 'Software Engineer',
-    start: 'TODO', // e.g. 'Mar 2024'
+    title: 'Associate Developer',
+    start: 'May 2024',
     summary:
-      'Mission-critical billing systems used by some of the largest payroll operations in the world.',
+      'Mission-critical payment and billing systems for a global marketplace. Event-driven architectures built to scale.',
     highlights: [
-      'Enterprise-scale services where correctness is not optional',
-      'Built internal AI tooling and workflows that help the team ship better and faster',
+      'Led a billing data-refinement pipeline end to end over two quarters: requirements, data modeling, architecture and implementation. It fixed a revenue-leakage problem caused by unknown customer status across multiple sources of truth.',
+      'Result: 60% better invoice-data accuracy and over $1M in annual revenue recovered.',
+      'Built big-data export pipelines with Databricks feeding the transactional database, cutting query time from 11 s to 100 ms.',
+      'Refactored the backend with retry and failover, and monitored production through Splunk.',
     ],
   },
   {
-    company: 'PureAI',
-    url: 'https://www.pureai.com.br/',
-    title: 'Full-stack Developer',
-    start: 'TODO',
-    end: 'TODO',
-    summary: 'Early-stage startup. Shipped the product and the marketing site with Next.js and TypeScript.',
-  },
-  {
-    company: 'Free From Club',
-    url: 'https://www.freefromclub.com.br/',
-    title: 'Mobile Developer',
-    start: 'TODO',
-    end: 'TODO',
-    summary: 'Built the React Native app for a food community in Brazil.',
+    company: 'ADP',
+    url: 'https://www.adp.com/',
+    title: 'Developer, internship',
+    start: 'Aug 2022',
+    end: 'May 2024',
+    summary:
+      'Worked with a global team maintaining and modernizing a microservices ecosystem in Node.js.',
+    highlights: [
+      'Upgraded dependencies and refactored codebases to current standards.',
+      'Helped move infrastructure from VMs to Kubernetes, containerizing and testing the components of an entire business domain.',
+    ],
   },
 ]
 
@@ -63,13 +62,12 @@ export const education = [
 
 export const skills = [
   'TypeScript',
-  'Node',
-  'React / Next.js',
-  'Astro',
-  'Python',
-  'Rust (learning)',
+  'Node.js',
+  'Next.js / React',
+  'Tailwind',
+  'AI SDK & agent workflows',
   'Docker',
   'AWS',
-  'LLM tooling & agent workflows',
-  'System design & performance',
+  'Databricks',
+  'Event-driven architecture',
 ]
