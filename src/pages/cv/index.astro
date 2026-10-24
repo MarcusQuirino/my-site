@@ -14,7 +14,14 @@ import { headline, experience, education, skills } from '../../data/cv'
   >
     CV
   </h1>
-  <p class='mb-10 max-w-[38rem] text-lg font-light'>{headline}</p>
+  <p class='mb-6 max-w-[38rem] text-lg font-light'>{headline}</p>
+  <a
+    href='/cv.pdf'
+    download='marcus-quirino-cv.pdf'
+    class='mb-10 inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-rose-400 px-5 font-bold text-zinc-900 no-underline hover:bg-rose-300'
+  >
+    Download CV as PDF
+  </a>
 
   <section>
     <h2 class='mb-4 text-2xl font-bold text-slate-100'>Experience</h2>
