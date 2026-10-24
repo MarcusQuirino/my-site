@@ -1,98 +1,63 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts'
+import { SITE_TITLE, SITE_DESCRIPTION, SOUTHLIKE_URL } from '../consts'
 import Link from '../components/Link.astro'
-import ProjectCard from '../components/ProjectCard.astro'
+import Southlike from '../components/Southlike.astro'
 import Layout from '../layouts/Layout.astro'
 import BlogCard from '../components/BlogCard.astro'
 import { getCollection } from 'astro:content'
 
 const posts = (await getCollection('blog'))
   .filter(post => post.data.highligth)
-  .sort((a, b) => {
-    return a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-  })
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 ---
 
 <Layout
   title={`${SITE_TITLE} - Home`}
   description={SITE_DESCRIPTION}
 >
-  <main class='text-gray-400 p-4 space-y-4'>
-    <h1
-      class='text-2xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300% animate-gradient md:text-4xl'
+  <h1
+    class='mb-4 mt-6 bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 bg-300 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent animate-gradient md:text-5xl'
+  >
+    Hi, my name is Marcus :3
+  </h1>
+  <article class='max-w-[38rem] space-y-4 text-lg font-light leading-relaxed'>
+    <p>
+      I'm a self-taught software engineer. Code is my art, and I like building software that makes
+      people's lives better.
+    </p>
+    <p>
+      These days most of my energy goes into systems: the AI tooling and workflows that help me ship
+      better and faster, and the mission-critical billing systems I work on at <Link href='https://www.adp.com/'>ADP</Link>.
+    </p>
+    <p>
+      I also run <Link href={SOUTHLIKE_URL}>Southlike Software</Link>, a boutique AI automation
+      agency for businesses. If you want the longer story, there's a <a href='/cv' class='text-rose-400 hover:text-rose-300'>CV</a> and a <a href='/faq' class='text-rose-400 hover:text-rose-300'>FAQ</a>.
+    </p>
+    <p>With that out of the way: welcome to my site!</p>
+  </article>
+
+  <section class='mt-12'>
+    <h2 class='mb-1 text-2xl font-bold text-slate-100'>Southlike Software</h2>
+    <p class='mb-4 text-zinc-400'>My agency. Boutique AI automation for businesses.</p>
+    <Southlike />
+  </section>
+
+  <section class='mt-12'>
+    <h2 class='mb-4 text-2xl font-bold text-slate-100'>Some blog posts</h2>
+    <ul class='grid gap-3 sm:grid-cols-2'>
+      {
+        posts.map(post => (
+          <li>
+            <BlogCard {...post} />
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href='/blog'
+      class='mt-4 block text-center text-lg text-slate-100 hover:text-rose-400'
     >
-      Hi, My name is Marcus :3
-    </h1>
-    <article class='space-y-4 font-light text-justify leading-relaxed md:text-xl'>
-      <p>I'm a self-taught full-stack web developer on all things javascript.</p>
-      <p>
-        Code is my art and I like to build software that makes people's lives better. Usually with <Link
-          href='https://www.typescriptlang.org/'
-        >
-          Typescript
-        </Link> and <Link href='https://nextjs.org/'>Nextjs</Link>
-      </p>
-      <p>
-        If you are interested professionally with me, you can check my <Link href='/cv'>CV</Link>.
-        Also feel free to connect with me through any of my social media or check my <Link
-          href='/faq'
-        >
-          FAQ
-        </Link>.
-      </p>
-      <p>with that out of the way: welcome to my site!</p>
-    </article>
-    <section class='flex flex-col gap-4'>
-      <h2 class='text-slate-100 text-xl font-semibold py-4'>Things I've worked on</h2>
-      <div class='flex flex-col gap-3 md:grid grid-cols-2'>
-        <ProjectCard
-          href='/'
-          title='this site'
-          tags={['astro', 'typescript']}
-        >
-          it's literally this exact site
-        </ProjectCard>
-        <ProjectCard
-          href='https://p4p-site.vercel.app'
-          title='p4p site'
-          tags={['html', 'css']}
-        >
-          site for my bf
-        </ProjectCard>
-        <ProjectCard
-          href='https://www.pureai.com.br/'
-          title='PureAI'
-          tags={['next', 'typescript']}
-        >
-          site for the startup I work at
-        </ProjectCard>
-        <ProjectCard
-          href='https://www.freefromclub.com.br/'
-          title='Free From Club'
-          tags={['react', 'typescript']}
-        >
-          the mobile app not the site
-        </ProjectCard>
-      </div>
-    </section>
-    <section>
-      <h2 class='text-slate-100 text-xl font-semibold py-4'>Some blog posts</h2>
-      <div class='flex flex-col gap-3'>
-        <ul class='space-y-4'>
-          {
-            posts.map(post => (
-              <li>
-                <BlogCard {...post} />
-              </li>
-            ))
-          }
-        </ul>
-        <a
-          href='/blog'
-          class='text-center text-slate-100 text-xl'
-          >more posts...</a
-        >
-      </div>
-    </section>
-  </main>
+      more posts…
+    </a>
+  </section>
 </Layout>
