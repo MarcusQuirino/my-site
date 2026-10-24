@@ -1,0 +1,97 @@
+---
+import { SITE_TITLE, SOUTHLIKE_URL } from '../consts'
+import Southlike from '../components/Southlike.astro'
+import Layout from '../layouts/Layout.astro'
+import BlogCard from '../components/BlogCard.astro'
+import { getLang, localizePath } from '../i18n'
+import { getLocalizedCollection } from '../i18n/content'
+import { ui } from '../i18n/ui'
+
+const lang = getLang(Astro.currentLocale)
+
+const posts = (await getLocalizedCollection('blog', lang))
+  .filter(post => post.data.highligth)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+
+const link = (href: string, text: string) =>
+  `<a href="${href}" target="_blank" rel="noopener noreferrer" class="text-rose-400 hover:text-rose-300">${text}</a>`
+const internal = (href: string, text: string) =>
+  `<a href="${localizePath(href, lang)}" class="text-rose-400 hover:text-rose-300">${text}</a>`
+
+const copy = {
+  en: {
+    title: `${SITE_TITLE} — AI Developer & Software Engineer in Porto Alegre`,
+    heading: `Hi, I'm ${SITE_TITLE}`,
+    intro: [
+      "Marcus Filipe on paper. I'm a self-taught software engineer and AI developer based in Porto Alegre, Brazil. Code is my art, and I like building software that makes people's lives better.",
+      `These days most of my energy goes into systems: the AI tooling and workflows that help me ship better and faster, and the mission-critical billing systems I work on at ${link('https://www.adp.com/', 'ADP')}.`,
+      `I also run ${link(SOUTHLIKE_URL, 'Southlike Software')}, a boutique AI automation agency for businesses. If you want the longer story, there's a ${internal('/cv', 'CV')} and a ${internal('/faq', 'FAQ')}.`,
+      'With that out of the way: welcome to my site!',
+    ],
+    southlikeTagline: 'My agency. Boutique AI automation for businesses.',
+    posts: 'Some blog posts',
+    morePosts: 'more posts…',
+  },
+  'pt-br': {
+    title: `${SITE_TITLE} — Desenvolvedor de IA em Porto Alegre`,
+    heading: `Oi, eu sou o ${SITE_TITLE}`,
+    intro: [
+      'Marcus Filipe no papel. Sou engenheiro de software autodidata e desenvolvedor de IA em Porto Alegre. Código é a minha arte, e eu gosto de construir software que deixa a vida das pessoas melhor.',
+      `Hoje em dia, a maior parte da minha energia vai para sistemas: as ferramentas e workflows de IA que me ajudam a entregar melhor e mais rápido, e os sistemas de faturamento de missão crítica em que trabalho na ${link('https://www.adp.com/', 'ADP')}.`,
+      `Também toco a ${link(SOUTHLIKE_URL, 'Southlike Software')}, uma agência boutique de automação com IA para empresas. Se quiser a história completa, tem um ${internal('/cv', 'currículo')} e um ${internal('/faq', 'FAQ')}.`,
+      'Dito isso: bem-vindo ao meu site!',
+    ],
+    southlikeTagline: 'Minha agência. Automação com IA sob medida para empresas.',
+    posts: 'Alguns posts do blog',
+    morePosts: 'mais posts…',
+  },
+}[lang]
+---
+
+<Layout
+  title={copy.title}
+  description={ui[lang].description}
+  jsonLd={[
+    {
+      '@type': 'ProfilePage',
+      url: new URL(localizePath('/', lang), Astro.site).href,
+      name: SITE_TITLE,
+      mainEntity: { '@id': new URL('/#person', Astro.site).href },
+      isPartOf: { '@id': new URL('/#website', Astro.site).href },
+    },
+  ]}
+>
+  <h1
+    class='mb-4 mt-6 bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 bg-300 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent animate-gradient md:text-5xl'
+  >
+    {copy.heading}
+  </h1>
+  <article class='max-w-[38rem] space-y-4 text-lg font-light leading-relaxed'>
+    {copy.intro.map(p => <p set:html={p} />)}
+  </article>
+
+  <section class='mt-12'>
+    <h2 class='mb-1 text-2xl font-bold text-slate-100'>Southlike Software</h2>
+    <p class='mb-4 text-zinc-400'>{copy.southlikeTagline}</p>
+    <Southlike />
+  </section>
+
+  <section class='mt-12'>
+    <h2 class='mb-4 text-2xl font-bold text-slate-100'>{copy.posts}</h2>
+    <ul class='grid gap-3 sm:grid-cols-2'>
+      {
+        posts.map(post => (
+          <li>
+            <BlogCard {...post} />
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href={localizePath('/blog', lang)}
+      class='mt-4 block text-center text-lg text-slate-100 hover:text-rose-400'
+    >
+      {copy.morePosts}
+    </a>
+  </section>
+</Layout>

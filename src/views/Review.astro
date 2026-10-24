@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import Layout from '../layouts/Layout.astro'
+import { SITE_TITLE } from '../consts'
+import FormattedDate from '../components/FormattedDate.astro'
+import { Image } from 'astro:assets'
+import { getLang } from '../i18n'
+import { entrySlug } from '../i18n/content'
+
+type Props = { entry: CollectionEntry<'reviews'> }
+
+const product = Astro.props.entry
+const lang = getLang(Astro.currentLocale)
+const { name, image, pubDate } = product.data
+const { Content } = await render(product)
+---
+
+<Layout
+  title={lang === 'pt-br' ? `Review: ${name} | ${SITE_TITLE}` : `${name} review | ${SITE_TITLE}`}
+  description={
+    lang === 'pt-br'
+      ? `Review do ${name} pelo ${SITE_TITLE}: como ele se sai no setup do dia a dia de um engenheiro de software.`
+      : `${SITE_TITLE}'s review of the ${name}: how it holds up as part of a software engineer's daily setup.`
+  }
+  image={image.src}
+>
+  <div class='p-4'>
+    <div class='text-slate-100'>
+      <Image
+        transition:name={`image-${entrySlug(product.id)}`}
+        quality={1}
+        format='avif'
+        height={192}
+        width={256}
+        class='w-screen'
+        src={image}
+        alt=''
+      />
+      <FormattedDate date={pubDate} />
+      <div class='p-4'></div>
+      <hr />
+      <div class='p-4'></div>
+      <div class='tracking-wide text-justify space-y-4 text-lg'>
+        <h1
+          class='text-2xl font-semibold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300 animate-gradient md:text-3xl'
+        >
+          {product.data.name}
+        </h1>
+        <article class='prose prose-lg prose-invert max-w-none'>
+          <Content />
+        </article>
+      </div>
+    </div>
+  </div>
+</Layout>

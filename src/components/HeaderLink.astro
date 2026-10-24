@@ -1,13 +1,16 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
 
-type Props = HTMLAttributes<'a'>
+type Props = HTMLAttributes<'a'> & {
+  // Only active on an exact match (for home links, which prefix every path)
+  exact?: boolean
+}
 
-const { href, class: className, ...props } = Astro.props
+const { href, exact = false, class: className, ...props } = Astro.props
 
 const { pathname } = Astro.url
 const path = pathname.replace(/\/$/, '') || '/'
-const isActive = href === path || (href !== '/' && typeof href === 'string' && path.startsWith(href))
+const isActive = href === path || (!exact && typeof href === 'string' && path.startsWith(`${href}/`))
 ---
 
 <a

@@ -1,0 +1,45 @@
+---
+import { SITE_TITLE } from "../consts";
+import Layout from "../layouts/Layout.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import { getLang } from "../i18n";
+import { getLocalizedCollection } from "../i18n/content";
+
+const lang = getLang(Astro.currentLocale);
+const copy = {
+  en: {
+    description: `The hardware and software ${SITE_TITLE} uses every day.`,
+    intro:
+      "This is a curated list of things I used dayly to get things done. Both hardware and software. Here you will find some brief reviews of the my tools and maybe, if you really like it, you can buy it using my affiliate links.",
+  },
+  "pt-br": {
+    description: `O hardware e o software que o ${SITE_TITLE} usa todo dia.`,
+    intro:
+      "Esta é uma lista com curadoria das coisas que eu uso no dia a dia pra fazer as coisas acontecerem. Hardware e software. Aqui você encontra umas reviews curtas das minhas ferramentas e, quem sabe, se gostar muito de alguma, pode comprar pelos meus links de afiliado.",
+  },
+}[lang];
+
+const products = (await getLocalizedCollection("reviews", lang))
+  .filter(product => product.data.using)
+  .sort((a, b) => a.data.id - b.data.id);
+---
+
+<Layout
+  title={`Setup | ${SITE_TITLE}`}
+  description={copy.description}
+>
+  <div class='p-4 space-y-8'>
+    <h1
+      class='text-4xl font-bold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300 animate-gradient'
+    >
+      Setup
+    </h1>
+    <p class='text-gray-400 font-light text-justify leading-relaxed md:text-xl'>
+      {copy.intro}
+    </p>
+    <h2 class='text-slate-100 text-2xl font-bold'>Hardware</h2>
+    <div class='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
+      {products.map(product => <ReviewCard {...product} />)}
+    </div>
+  </div>
+</Layout>

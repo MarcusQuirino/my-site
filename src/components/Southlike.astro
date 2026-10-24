@@ -1,5 +1,9 @@
 ---
 import { SOUTHLIKE_URL } from '../consts'
+import { getLang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+const t = ui[getLang(Astro.currentLocale)].southlike
 ---
 
 <div class='grid gap-4 rounded-2xl border border-rose-400 bg-zinc-800 p-6'>
@@ -7,18 +11,10 @@ import { SOUTHLIKE_URL } from '../consts'
     <span class='h-3.5 w-3.5 rounded-full bg-gradient-to-br from-rose-400 to-yellow-500'></span>
     Southlike Software
   </div>
-  <p class='m-0'>
-    A boutique AI automation agency for businesses. We find the slow, repetitive parts of how a
-    company works and replace them with systems that run on their own.
-  </p>
+  <p class='m-0'>{t.pitch}</p>
   <ul class='m-0 grid list-none gap-2 p-0'>
     {
-      [
-        'Audits that show where AI actually pays off',
-        'Automations that qualify, route and follow up without a human',
-        'Integrations that make existing tools talk to each other',
-        'Custom systems when nothing off the shelf fits',
-      ].map(item => (
+      t.services.map(item => (
         <li class='flex items-baseline gap-2.5'>
           <span class='h-2 w-2 flex-none translate-y-[-2px] rounded-full bg-rose-400' />
           {item}
@@ -33,7 +29,7 @@ import { SOUTHLIKE_URL } from '../consts'
       rel='noopener noreferrer'
       class='inline-flex min-h-[44px] items-center justify-center rounded-xl bg-rose-400 px-5 font-bold text-zinc-900 no-underline hover:bg-rose-300'
     >
-      Visit Southlike
+      {t.visit}
     </a>
     <a
       href={`${SOUTHLIKE_URL}/servicos`}
@@ -41,7 +37,7 @@ import { SOUTHLIKE_URL } from '../consts'
       rel='noopener noreferrer'
       class='inline-flex min-h-[44px] items-center justify-center rounded-xl border border-zinc-600 px-5 font-semibold text-slate-100 no-underline hover:border-rose-400'
     >
-      What we do
+      {t.whatWeDo}
     </a>
   </div>
 </div>

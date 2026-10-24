@@ -4,15 +4,20 @@ import FormattedDate from '../components/FormattedDate.astro'
 import type { HTMLAttributes } from 'astro/types'
 
 import Tag from './Tag.astro'
+import { getLang, localizePath } from '../i18n'
+import { entrySlug } from '../i18n/content'
+import { ui } from '../i18n/ui'
+
 type Props = CollectionEntry<'blog'> & HTMLAttributes<'a'>
 
 const { data, id } = Astro.props
 
 const { title, description, pubDate, tags } = data
+const lang = getLang(Astro.currentLocale)
 ---
 
 <a
-  href={`/blog/${id}/`}
+  href={localizePath(`/blog/${entrySlug(id)}/`, lang)}
   class='flex h-full flex-col gap-2 rounded-2xl border border-rose-400 bg-zinc-800 p-4 text-zinc-300 no-underline hover:bg-zinc-900'
 >
   <h3
@@ -24,6 +29,6 @@ const { title, description, pubDate, tags } = data
   <p class='line-clamp-2 text-sm text-zinc-400'>{description}</p>
   <div class='mt-auto text-sm text-zinc-400'><FormattedDate date={pubDate} /></div>
   <div class='flex flex-row flex-wrap gap-2'>
-    {tags.map(tag => <Tag tag={tag}>{tag}</Tag>)}
+    {tags.map(tag => <Tag tag={tag}>{ui[lang].tags[tag] ?? tag}</Tag>)}
   </div>
 </a>

@@ -1,0 +1,10 @@
+---
+import BlogPost from '../../../views/BlogPost.astro'
+import { getEntryPaths } from '../../../i18n/content'
+
+export const getStaticPaths = () => getEntryPaths('blog', 'pt-br')
+
+const { entry } = Astro.props
+---
+
+<BlogPost entry={entry} />

@@ -1,29 +1,28 @@
 ---
 import { Icon } from 'astro-icon/components'
+import { SOCIALS } from '../consts'
+import { getLang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+const t = ui[getLang(Astro.currentLocale)]
 const today = new Date()
-const socials = [
-  { href: 'https://twitter.com/Marcus_filipus', icon: 'ri:twitter-fill', label: 'Twitter' },
-  { href: 'https://www.instagram.com/marcus_filipus/', icon: 'ri:instagram-fill', label: 'Instagram' },
-  { href: 'https://github.com/MarcusQuirino', icon: 'ri:github-fill', label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/marcus-quirino-dev/', icon: 'ri:linkedin-box-fill', label: 'LinkedIn' },
-]
 ---
 
 <footer class='mt-14 border-t border-zinc-700 px-4 py-6 text-center text-sm text-zinc-400'>
   <div class='mb-3 flex justify-center gap-6'>
     {
-      socials.map(s => (
+      SOCIALS.map(s => (
         <a
           href={s.href}
           aria-label={s.label}
           class='text-zinc-300 hover:text-rose-400'
           target='_blank'
-          rel='noopener noreferrer'
+          rel='me noopener noreferrer'
         >
           <Icon size='24' name={s.icon} />
         </a>
       ))
     }
   </div>
-  <p>&copy; {today.getFullYear()} Marcus Filipus. All rights reserved.</p>
+  <p>&copy; {today.getFullYear()} Marcus Filipus · {t.location}</p>
 </footer>

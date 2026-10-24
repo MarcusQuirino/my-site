@@ -1,62 +1,10 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import { getCollection, render } from 'astro:content'
-import Layout from '../../layouts/Layout.astro'
-import FormattedDate from '../../components/FormattedDate.astro'
-import { Image } from 'astro:assets'
+import BlogPost from '../../views/BlogPost.astro'
+import { getEntryPaths } from '../../i18n/content'
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog')
-  return posts.map(post => ({
-    params: { slug: post.id },
-    props: post,
-  }))
-}
-type Props = CollectionEntry<'blog'>
+export const getStaticPaths = () => getEntryPaths('blog', 'en')
 
-const post = Astro.props
-const { title, description, pubDate, updatedDate, heroImage } = post.data
-const { Content } = await render(post)
+const { entry } = Astro.props
 ---
 
-<Layout
-  title={title}
-  description={description}
->
-  <div class='p-4'>
-    <div class='text-slate-100'>
-      {
-        heroImage && (
-          <Image
-            format='avif'
-            class='w-screen'
-            src={heroImage}
-            alt=''
-          />
-        )
-      }
-      <FormattedDate date={pubDate} />
-      {
-        updatedDate && (
-          <div>
-            Last updated on <FormattedDate date={updatedDate} />
-          </div>
-        )
-      }
-      <div class='p-4'></div>
-      <hr />
-      <div class='p-4'></div>
-      <div class='tracking-wide text-left space-y-4 text-lg md:text-justify'>
-        <h1
-          class='text-2xl font-semibold bg-gradient-to-r from-rose-400 via-red-500 to-yellow-500 text-transparent bg-clip-text bg-300 animate-gradient md:text-3xl'
-          transition:name={post.data.title}
-        >
-          {post.data.title}
-        </h1>
-        <article class='prose prose-lg prose-invert max-w-none'>
-          <Content />
-        </article>
-      </div>
-    </div>
-  </div>
-</Layout>
+<BlogPost entry={entry} />
