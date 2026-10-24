@@ -7,7 +7,7 @@ import icon from 'astro-icon'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://marcusfilipus.com',
+  site: 'https://marcusfilipus.dev',
   integrations: [mdx(), sitemap(), icon()],
   output: 'static',
   adapter: vercel(),
