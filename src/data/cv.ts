@@ -25,8 +25,21 @@ export const experience: Experience[] = [
   {
     company: 'ADP',
     url: 'https://www.adp.com/',
+    title: 'Developer',
+    start: '2026', // TODO: confirm promotion date
+    summary:
+      'Promoted to own more of the billing platform. Same mission-critical systems, wider scope: I drive improvements across the pipelines and services I built, and carry more of the architecture and reliability decisions for the team.',
+    highlights: [
+      'Keep raising invoice-data accuracy and closing the remaining revenue-leakage gaps.',
+      'Build AI tooling and workflows that help the team ship better and faster.',
+    ],
+  },
+  {
+    company: 'ADP',
+    url: 'https://www.adp.com/',
     title: 'Associate Developer',
     start: 'May 2024',
+    end: '2026', // TODO: confirm promotion date
     summary:
       'Mission-critical payment and billing systems for a global marketplace. Event-driven architectures built to scale.',
     highlights: [
