@@ -1,68 +1,57 @@
-# Astro Starter Kit: Blog
+# Marcus Filipus
 
+Personal site of Marcus Filipus: blog, gadget reviews, CV, and a showcase for Southlike Software. Bilingual in English and Brazilian Portuguese.
+
+**Live:** https://my-site-sepia.vercel.app
+
+## Features
+
+- **Bilingual (en / pt-BR):** English at `/`, Portuguese mirrored under `/pt-br/`, with a header language toggle, hreflang alternates, and a localized sitemap. The build fails if a blog post or review is missing its translation.
+- **Blog:** MDX posts with typed frontmatter (tags, hero image, publish/update dates), plus a per-language RSS feed (`/rss.xml`, `/pt-br/rss.xml`).
+- **Setup / reviews:** short reviews of the hardware and software I use every day, written as MDX content, with optional affiliate links.
+- **CV:** an HTML CV page and a Harvard-style PDF (`/cv.pdf`, `/pt-br/cv.pdf`) generated at build time with PDFKit from the same data source.
+- **FAQ** page and a Southlike Software section on the home page.
+- **SEO:** meta and Open Graph tags, canonical URLs, and JSON-LD (Person / WebSite) structured data.
+- View transitions between pages via Astro's `ClientRouter`.
+
+## Tech stack
+
+- [Astro 7](https://astro.build) (static output) with TypeScript
+- MDX and Astro content collections with Zod schemas
+- Tailwind CSS 4 with the typography plugin
+- `astro-icon` (Remix Icon and Circle Flags sets)
+- PDFKit for the CV PDF, `@astrojs/rss`, `@astrojs/sitemap`
+- Deployed on Vercel via `@astrojs/vercel`
+
+## Project structure
+
+```text
+src/
+├── pages/        # Thin route wrappers; pt-br/ mirrors the English routes
+├── views/        # Page bodies shared by both languages
+├── content/      # blog/<lang>/ and reviews/<lang>/ MDX files
+├── i18n/         # Locale helpers, UI strings, localized collection queries
+├── components/   # Header, footer, cards, SEO head, language toggle
+├── layouts/      # Main layout
+├── data/cv.ts    # CV content in both languages
+├── lib/          # CV PDF and RSS generators
+└── consts.ts     # Site identity and social links
 ```
-npm create astro@latest -- --template blog
+
+To add a page, create a view in `src/views/` and a wrapper in both `src/pages/` and `src/pages/pt-br/`. Blog posts and reviews need one file per language with the same filename.
+
+## Local development
+
+Uses [Bun](https://bun.sh).
+
+```bash
+bun install        # install dependencies
+bun run dev        # start the dev server (http://localhost:4321)
+bun run build      # production build to ./dist/
+bun run preview    # preview the production build
+bun astro check    # typecheck
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+## Deployment
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![blog](https://user-images.githubusercontent.com/4677417/186189140-4ef17aac-c3c9-4918-a8c2-ce86ba1bb394.png)
-
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Deployed on Vercel using the `@astrojs/vercel` adapter with static output. The canonical site URL is set in `astro.config.mjs`.
